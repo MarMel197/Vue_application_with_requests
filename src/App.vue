@@ -1,28 +1,49 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+
+    <div>
+      <!-- <img src="@/images/logo.png"> -->
+      <h1>Ghibli Movies</h1>
+      <movies-list :movies='movies'></movies-list>
+      <movie-detail :movie='selectedMovie'></movie-detail>
+    </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+
+import MoviesList from './components/MoviesList.vue';
+import MovieDetail from './components/MovieDetail.vue';
+import {eventBus} from './main.js';
 
 export default {
-  name: 'App',
+  name: 'app',
+  data(){
+    return{
+      movies: [],
+    selectedMovie: null
+    };
+  },
+  mounted(){
+    fetch('https://ghibliapi.herokuapp.com/films')
+    .then(response => response.json())
+    .then(data => this.movies = data)
+
+    eventBus.$on('movie-selected', (movie) => {
+      this.selectedMovie = movie;
+    })
+  },
+
   components: {
-    HelloWorld
+    "movies-list": MoviesList,
+    "movie-detail": MovieDetail
   }
 }
+
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+  @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+  div > h1 {
+    font-family: "Roboto";
+    font-size: 28px;
+  }
 </style>
