@@ -1,5 +1,5 @@
 <template>
-    <div v-if="movie">
+    <div id="selected_movie" v-if="movie">
         <h3>{{movie.title}}</h3>
         <p>Director   : {{movie.director}}</p>
         <p>Produer    : {{movie.producer}}</p>

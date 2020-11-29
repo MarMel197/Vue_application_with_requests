@@ -3,8 +3,21 @@
     <div>
       <!-- <img src="@/images/logo.png"> -->
       <h1>Ghibli Movies</h1>
-      <movies-list :movies='movies'></movies-list>
-      <movie-detail :movie='selectedMovie'></movie-detail>
+      <label for ="movie_select">Select a Movie: </label>
+      <select id="movie_select" v-model="selectedMovie">
+        <option disabled value="">Select a Movie</option>
+        <option v-for="(movie, index) in movies" :key="index" :value="movie">{{movie.title}}</option>
+      </select>
+    
+      <div>
+        <movie-detail v-if="selectedMovie" :movie="selectedMovie"></movie-detail> 
+      </div> 
+      
+
+
+
+      <!-- <movies-list id="movies_list" :movies='movies'></movies-list>
+      <movie-detail :movie='selectedMovie'></movie-detail> -->
     </div>
 </template>
 
@@ -45,5 +58,15 @@ export default {
   div > h1 {
     font-family: "Roboto";
     font-size: 28px;
+  }
+
+  div > label {
+    font-family: "Roboto";
+    font-size: 16px; 
+  }
+
+    div > option {
+    font-family: "Roboto";
+    font-size: 16px; 
   }
 </style>
